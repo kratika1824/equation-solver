@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Equation Solver API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "equationId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Store equation - 3x + 2y - z",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"equation\": \"3x + 2y - z\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/store", "host": ["{{baseUrl}}"], "path": ["api", "equations", "store"] }
+      }
+    },
+    {
+      "name": "Store equation - x^2 + y^2 - 4",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"equation\": \"x^2 + y^2 - 4\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/store", "host": ["{{baseUrl}}"], "path": ["api", "equations", "store"] }
+      }
+    },
+    {
+      "name": "List equations",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/equations", "host": ["{{baseUrl}}"], "path": ["api", "equations"] }
+      }
+    },
+    {
+      "name": "Evaluate equation",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"variables\": {\n    \"x\": 2,\n    \"y\": 3,\n    \"z\": 1\n  }\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/{{equationId}}/evaluate", "host": ["{{baseUrl}}"], "path": ["api", "equations", "{{equationId}}", "evaluate"] }
+      }
+    },
+    {
+      "name": "Error - invalid equation",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"equation\": \"3 + * 4\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/store", "host": ["{{baseUrl}}"], "path": ["api", "equations", "store"] }
+      }
+    },
+    {
+      "name": "Error - missing variable",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"variables\": {\n    \"x\": 2\n  }\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/{{equationId}}/evaluate", "host": ["{{baseUrl}}"], "path": ["api", "equations", "{{equationId}}", "evaluate"] }
+      }
+    },
+    {
+      "name": "Error - unknown equation id",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"variables\": {}\n}" },
+        "url": { "raw": "{{baseUrl}}/api/equations/999/evaluate", "host": ["{{baseUrl}}"], "path": ["api", "equations", "999", "evaluate"] }
+      }
+    }
+  ]
+}
